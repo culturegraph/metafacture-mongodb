@@ -34,36 +34,33 @@
 	</licenses>
 
   	<developers>
-  		<!-- TODO: Add developer contact information -->
-<!-- 		<developer> -->
-<!-- 			<id>developer-id</id> -->
-<!-- 			<name>Developer Name</name> -->
-<!-- 			<email>developer@email</email> -->
-<!-- 			<url>http://example.org/developer-id</url> -->
-<!-- 			<organization>Organisation of developer</organization> -->
-<!-- 			<organizationUrl>Organisation Website</organizationUrl> -->
-<!-- 			<roles> -->
-<!-- 				<role>architect</role> -->
-<!-- 				<role>developer</role> -->
-<!-- 			</roles> -->
-<!-- 			<timezone>+1</timezone> -->
-<!-- 		</developer> -->
+  		<developer>
+			<id>thomasseidel</id>
+			<name>Thomas Seidel</name>
+			<email>t.seidel@dnb.de</email>
+			<url>https://github.com/thomasseidel</url>
+			<organization>Deutsche Nationalbibliothek</organization>
+			<organizationUrl>http://www.dnb.de</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
 	</developers>
  
-	<!-- TODO: Add SCM information -->
-<!--  	<scm> -->
-<!-- 		<connection>scm:git:git://example.org/git-user/git-repo.git</connection> -->
-<!-- 		<developerConnection>scm:git:git@example.org:git-user/git-repo.git</developerConnection> -->
-<!-- 		<url>http://example.org/git-user/git-repo</url> -->
-<!-- 		<tag>HEAD</tag> -->
-<!-- 	</scm> -->
+	<scm>
+		<connection>scm:git:git://github.com/culturegraph/metafacture-mongodb.git</connection>
+		<developerConnection>scm:git:git@github.com:culturegraph/metafacture-mongodb.git</developerConnection>
+		<url>http://github.com/culturegraph/metafacture-mongodb</url>
+		<tag>HEAD</tag>
+	</scm>
 
-	<!-- TODO: Add issue tracker information -->
-<!-- 	<issueManagement> -->
-<!-- 		<system>Issue Tracker</system> -->
-<!-- 		<url>https://example.org/issues</url> -->
-<!-- 	</issueManagement> -->
-
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/culturegraph/metafacture-mongodb/issues</url>
+	</issueManagement>
+	
  	<distributionManagement>
 		<repository>
 			<id>sonatype-nexus-staging</id>
