@@ -30,4 +30,6 @@ public interface MongoDBConnection {
 
 	void save(DBObject dbObject);
 
+	void close();
+
 }

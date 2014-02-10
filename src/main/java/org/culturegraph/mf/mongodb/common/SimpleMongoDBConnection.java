@@ -33,6 +33,7 @@ import com.mongodb.MongoClientURI;
  */
 public class SimpleMongoDBConnection implements MongoDBConnection {
 
+	private final MongoClient mongoClient;
 	private final DBCollection dbCollection;
 
 	/**
@@ -43,7 +44,7 @@ public class SimpleMongoDBConnection implements MongoDBConnection {
 	public SimpleMongoDBConnection(final String uri)
 			throws UnknownHostException {
 		final MongoClientURI mongoClientUri = new MongoClientURI(uri);
-		final MongoClient mongoClient = new MongoClient(mongoClientUri);
+		mongoClient = new MongoClient(mongoClientUri);
 		final DB db = mongoClient.getDB(mongoClientUri.getDatabase());
 		dbCollection = db.getCollection(mongoClientUri.getCollection());
 	}
@@ -58,4 +59,8 @@ public class SimpleMongoDBConnection implements MongoDBConnection {
 		dbCollection.save(dbObject);
 	}
 
+	@Override
+	public final void close() {
+		mongoClient.close();
+	}
 }
