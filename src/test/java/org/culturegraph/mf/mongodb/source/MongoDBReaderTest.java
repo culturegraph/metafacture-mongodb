@@ -36,17 +36,17 @@ import com.mongodb.util.JSON;
  */
 public final class MongoDBReaderTest {
 
-	private static final String QUERY_DBOBJECT_AS_JSON = "{ \"_id\" : \"42\" }";
+	private static final String QUERY_DBOBJECT_AS_JSON = "{ \"_id\" : \"23\" }";
 
-	private static final String RETRIEVED_DBOBJECT_AS_JSON = "{ \"_id\" : \"42\","
+	private static final String RETRIEVED_DBOBJECT_AS_JSON = "{ \"_id\" : \"23\","
 			+ "   \"data\" : ["
-			+ "     { \"#a\" : \"value1\" },"
-			+ "     { \"#A\" : ["
-			+ "       { \"#B\" : ["
-			+ "         { \"#b\" : \"value2\" }"
+			+ "     { \"#c\" : \"value1\" },"
+			+ "     { \"#C\" : ["
+			+ "       { \"#D\" : ["
+			+ "         { \"#d\" : \"value2\" }"
 			+ "         ]"
 			+ "       },"
-			+ "       { \"#a\" : \"value3\" }"
+			+ "       { \"#c\" : \"value3\" }"
 			+ "       ]"
 			+ "     }"
 			+ "   ]"
@@ -77,13 +77,13 @@ public final class MongoDBReaderTest {
 				.thenReturn(dbCursor);
 
 		final EventList expected = new EventList();
-		expected.startRecord("42");
-		expected.literal("a", "value1");
-		expected.startEntity("A");
-		expected.startEntity("B");
-		expected.literal("b", "value2");
+		expected.startRecord("23");
+		expected.literal("c", "value1");
+		expected.startEntity("C");
+		expected.startEntity("D");
+		expected.literal("d", "value2");
 		expected.endEntity();
-		expected.literal("a", "value3");
+		expected.literal("c", "value3");
 		expected.endEntity();
 		expected.endRecord();
 		expected.closeStream();
@@ -91,7 +91,7 @@ public final class MongoDBReaderTest {
 				expected.getEvents());
 		mongoDBReader.setReceiver(streamValidator);
 
-		mongoDBReader.process("42");
+		mongoDBReader.process("23");
 		mongoDBReader.closeStream();
 	}
 }
