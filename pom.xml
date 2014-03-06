@@ -18,7 +18,7 @@
 
 	<groupId>org.culturegraph</groupId>
 	<artifactId>metafacture-mongodb</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 	<packaging>jar</packaging>
 
 	<name>metafacture-mongodb</name>
@@ -52,7 +52,7 @@
 		<connection>scm:git:git://github.com/culturegraph/metafacture-mongodb.git</connection>
 		<developerConnection>scm:git:git@github.com:culturegraph/metafacture-mongodb.git</developerConnection>
 		<url>http://github.com/culturegraph/metafacture-mongodb</url>
-		<tag>HEAD</tag>
+		<tag>metafacture-mongodb-0.2.1</tag>
 	</scm>
 
 	<issueManagement>
