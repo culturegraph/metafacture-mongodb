@@ -108,13 +108,14 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<outputFile>${project.build.directory}/${project.name}-${project.version}-plugin.jar</outputFile>
 							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<excludes>
 									<exclude>org.culturegraph:metafacture-core</exclude>
 								</excludes>
 							</artifactSet>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>plugin</shadedClassifierName>
 						</configuration>
 					</execution>
 				</executions>
