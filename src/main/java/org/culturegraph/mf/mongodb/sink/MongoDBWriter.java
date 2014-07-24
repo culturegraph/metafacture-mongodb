@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Deutsche Nationalbibliothek
+ *  Copyright 2013, 2014 Deutsche Nationalbibliothek
  *
  *  Licensed under the Apache License, Version 2.0 the "License";
  *  you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package org.culturegraph.mf.mongodb.sink;
 
 import java.net.UnknownHostException;
@@ -41,7 +40,7 @@ import com.mongodb.MongoURI;
  * MongoDBWriter receives a metadata stream and writes the records into a
  * MongoDB collection.
  * <p>
- * Format: One MongoDB documents represents one record. The MongoDB document
+ * Format: One MongoDB document represents one record. The MongoDB document
  * identifier will be set to the record identifier. If the record identifier is
  * null, MongoDB chooses an unique document identifier. Entities are stored as
  * name/value pairs, value is a list which hold subsequent entities and
@@ -158,6 +157,7 @@ public class MongoDBWriter implements StreamReceiver {
 
 	public final void closeStream() {
 		dataStack.clear();
+		mongoDBConnection.close();
 	}
 
 }
