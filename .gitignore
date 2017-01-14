@@ -10,3 +10,6 @@
 /.checkstyle
 /.classpath
 /.project
+
+*.iml
+/.idea
