@@ -13,8 +13,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.culturegraph.mf.mongodb.sink;
+package org.culturegraph.mf.mongodb;
 
+import org.culturegraph.mf.mongodb.MongoDBWriter;
 import org.culturegraph.mf.mongodb.common.MongoDBConnection;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +27,9 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 /**
- * 
+ *
  * @author Thomas Seidel
- * 
+ *
  */
 public final class MongoDBWriterTest {
 

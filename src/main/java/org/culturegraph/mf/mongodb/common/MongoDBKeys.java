@@ -15,8 +15,8 @@
  */
 package org.culturegraph.mf.mongodb.common;
 
-import org.culturegraph.mf.mongodb.sink.MongoDBWriter;
-import org.culturegraph.mf.mongodb.source.MongoDBReader;
+import org.culturegraph.mf.mongodb.MongoDBWriter;
+import org.culturegraph.mf.mongodb.MongoDBReader;
 
 /**
  * Defines special keys to be used by {@link MongoDBWriter} and

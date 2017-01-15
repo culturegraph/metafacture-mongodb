@@ -13,12 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.culturegraph.mf.mongodb.source;
+package org.culturegraph.mf.mongodb;
 
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
 import org.culturegraph.mf.framework.StreamReceiver;
+import org.culturegraph.mf.mongodb.MongoDBReader;
 import org.culturegraph.mf.mongodb.common.MongoDBConnection;
 import org.junit.Before;
 import org.junit.Rule;

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.culturegraph.mf.mongodb.sink;
+package org.culturegraph.mf.mongodb;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -28,7 +28,6 @@ import org.culturegraph.mf.framework.annotations.In;
 import org.culturegraph.mf.mongodb.common.MongoDBConnection;
 import org.culturegraph.mf.mongodb.common.MongoDBKeys;
 import org.culturegraph.mf.mongodb.common.SimpleMongoDBConnection;
-import org.culturegraph.mf.mongodb.source.MongoDBReader;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
