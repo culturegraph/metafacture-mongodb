@@ -19,9 +19,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 /**
- * 
+ * Provides access read/write access to a MongoDB.
+ *
  * @author Thomas Seidel
- * 
  */
 public interface MongoDBConnection {
 

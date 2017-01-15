@@ -25,10 +25,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
 /**
- * Setups the MongoDB connection.
- * 
+ * Sets up the MongoDB connection.
+ *
  * @author Thomas Seidel
- * 
  */
 public class SimpleMongoDBConnection implements MongoDBConnection {
 
@@ -36,8 +35,10 @@ public class SimpleMongoDBConnection implements MongoDBConnection {
 	private final DBCollection dbCollection;
 
 	/**
-	 * @param uri
-	 *            monogdb://user:pass@host:port/database.collection?options...
+	 * Create an instance of {@code SimpleMongoDBConnection}.
+	 * @param uri {@code monogdb://user:pass@host:port/database.collection?options...}
+	 * @throws UnknownHostException if the IP address of the MongoDB server could
+	 * not be determined.
 	 * @see MongoClientURI
 	 */
 	public SimpleMongoDBConnection(final String uri)
@@ -62,4 +63,5 @@ public class SimpleMongoDBConnection implements MongoDBConnection {
 	public final void close() {
 		mongoClient.close();
 	}
+
 }

@@ -15,23 +15,27 @@
  */
 package org.culturegraph.mf.mongodb.source;
 
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.when;
+
+import org.culturegraph.mf.framework.StreamReceiver;
 import org.culturegraph.mf.mongodb.common.MongoDBConnection;
-import org.culturegraph.mf.stream.sink.EventList;
-import org.culturegraph.mf.stream.sink.StreamValidator;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 /**
- * 
+ *
  * @author Thomas Seidel
- * 
+ *
  */
 public final class MongoDBReaderTest {
 
@@ -51,46 +55,49 @@ public final class MongoDBReaderTest {
 			+ "   ]"
 			+ " }";
 
+	@Rule
+	public MockitoRule mockitoRule = MockitoJUnit.rule();
+
 	private MongoDBReader mongoDBReader;
 
 	@Mock
+	private StreamReceiver receiver;
+
+	@Mock
 	private MongoDBConnection mongoDBConnection;
+
 	@Mock
 	private DBCursor dbCursor;
 
 	@Before
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
 		mongoDBReader = new MongoDBReader(mongoDBConnection);
+		mongoDBReader.setReceiver(receiver);
 	}
 
 	@Test
 	public void shouldRetrieveSingleDBObjectAsStream() {
-		final DBObject queryDBObject = (DBObject) JSON
-				.parse(QUERY_DBOBJECT_AS_JSON);
-		final DBObject retrievedDBObject = (DBObject) JSON
-				.parse(RETRIEVED_DBOBJECT_AS_JSON);
-		Mockito.when(dbCursor.hasNext()).thenReturn(true, false);
-		Mockito.when(dbCursor.next()).thenReturn(retrievedDBObject);
-		Mockito.when(mongoDBConnection.find(queryDBObject))
-				.thenReturn(dbCursor);
-
-		final EventList expected = new EventList();
-		expected.startRecord("23");
-		expected.literal("c", "value1");
-		expected.startEntity("C");
-		expected.startEntity("D");
-		expected.literal("d", "value2");
-		expected.endEntity();
-		expected.literal("c", "value3");
-		expected.endEntity();
-		expected.endRecord();
-		expected.closeStream();
-		final StreamValidator streamValidator = new StreamValidator(
-				expected.getEvents());
-		mongoDBReader.setReceiver(streamValidator);
+		final DBObject queryDBObject = (DBObject) JSON.parse(
+				QUERY_DBOBJECT_AS_JSON);
+		final DBObject retrievedDBObject = (DBObject) JSON.parse(
+				RETRIEVED_DBOBJECT_AS_JSON);
+		when(dbCursor.hasNext()).thenReturn(true, false);
+		when(dbCursor.next()).thenReturn(retrievedDBObject);
+		when(mongoDBConnection.find(queryDBObject)).thenReturn(dbCursor);
 
 		mongoDBReader.process("23");
 		mongoDBReader.closeStream();
+
+		final InOrder ordered = inOrder(receiver);
+		ordered.verify(receiver).startRecord("23");
+		ordered.verify(receiver).literal("c", "value1");
+		ordered.verify(receiver).startEntity("C");
+		ordered.verify(receiver).startEntity("D");
+		ordered.verify(receiver).literal("d", "value2");
+		ordered.verify(receiver).endEntity();
+		ordered.verify(receiver).literal("c", "value3");
+		ordered.verify(receiver).endEntity();
+		ordered.verify(receiver).endRecord();
 	}
+
 }

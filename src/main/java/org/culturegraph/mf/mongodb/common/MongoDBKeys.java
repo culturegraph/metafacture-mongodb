@@ -19,33 +19,30 @@ import org.culturegraph.mf.mongodb.sink.MongoDBWriter;
 import org.culturegraph.mf.mongodb.source.MongoDBReader;
 
 /**
- * Defines special keys to be used by MongoDBWriter and MongoDBReader
- * 
+ * Defines special keys to be used by {@link MongoDBWriter} and
+ * {@link MongoDBReader}.
+ *
  * @author Thomas Seidel
- * 
- * @see MongoDBWriter
- * @see MongoDBReader
- * 
  */
 public final class MongoDBKeys {
 
 	/**
-	 * The key used to store a record identifier
+	 * The key used to store a record identifier.
 	 */
 	public static final String RECORD_ID_KEY = "_id";
 
 	/**
-	 * The key used to store the entities and literals
+	 * The key used to store the entities and literals.
 	 */
 	public static final String DATA_KEY = "data";
 
 	/**
-	 * The prefix to put in front of every entity and literal key
+	 * The prefix to put in front of every entity and literal key.
 	 */
 	public static final String KEY_PREFIX = "#";
 
 	private MongoDBKeys() {
-
+		throw new AssertionError("No instances allowed");
 	}
 
 }

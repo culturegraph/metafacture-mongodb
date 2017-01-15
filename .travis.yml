@@ -1,11 +1,11 @@
 language: java
 jdk:
-  - openjdk6
+  - openjdk8
 
 env:
   global:
     - SONATYPE_USERNAME=culturegraph
-    - secure: "Jm79ixtXuNK15bNV0noumeUoOGxh30b4vLogcfVXwt1wAodCqWWmZh2F6zhEcx1A0EpyT+2PD5L8UUdRknNpOQt1mk/ZyJvsFZxXN/gU5EGgqjJOkg8+g/hICNzC70+9Kiuyo//+A+sLEfjkPj2nFd9LkcXv49jIsAtITuWvvpQ=" 
-    
+    - secure: "Jm79ixtXuNK15bNV0noumeUoOGxh30b4vLogcfVXwt1wAodCqWWmZh2F6zhEcx1A0EpyT+2PD5L8UUdRknNpOQt1mk/ZyJvsFZxXN/gU5EGgqjJOkg8+g/hICNzC70+9Kiuyo//+A+sLEfjkPj2nFd9LkcXv49jIsAtITuWvvpQ="
+
 after_success:
   - "[[ $TRAVIS_BRANCH == \"master\" ]] && { python travis-ci/configure-mvn.py ; mvn clean deploy --settings ~/.m2/mySettings.xml -Dgpg.skip=true -Psonatype-oss-release ; }"

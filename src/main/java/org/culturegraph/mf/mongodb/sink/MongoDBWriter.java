@@ -21,7 +21,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.culturegraph.mf.exceptions.MetafactureException;
+import org.culturegraph.mf.framework.MetafactureException;
 import org.culturegraph.mf.framework.StreamReceiver;
 import org.culturegraph.mf.framework.annotations.Description;
 import org.culturegraph.mf.framework.annotations.In;
@@ -33,12 +33,9 @@ import org.culturegraph.mf.mongodb.source.MongoDBReader;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 
 /**
- * 
- * MongoDBWriter receives a metadata stream and writes the records into a
- * MongoDB collection.
+ * Receives a metadata stream and writes the records into a MongoDB collection.
  * <p>
  * Format: One MongoDB document represents one record. The MongoDB document
  * identifier will be set to the record identifier. If the record identifier is
@@ -50,7 +47,7 @@ import com.mongodb.MongoURI;
  * Example:
  * <p>
  * The metadata stream
- * 
+ *
  * <pre>
  * startRecord(&quot;42&quot;);
  * literal(&quot;a&quot;, &quot;value1&quot;);
@@ -62,9 +59,9 @@ import com.mongodb.MongoURI;
  * endEntity();
  * endRecord();
  * </pre>
- * 
+ *
  * will be stored as
- * 
+ *
  * <pre>
  * { "_id" : "42",
  *   "data" : [
@@ -80,13 +77,10 @@ import com.mongodb.MongoURI;
  *   ]
  * }
  * </pre>
- * 
+ *
  * @see MongoDBKeys
  * @see MongoDBReader
- * 
  * @author Thomas Seidel
- * 
- * 
  */
 @Description("writes a stream into a MongoDB collection. "
 		+ "Provide MongoDB access URI in brackets. "
@@ -97,12 +91,14 @@ public class MongoDBWriter implements StreamReceiver {
 	private final MongoDBConnection mongoDBConnection;
 
 	private DBObject recordDBObject;
-	private Deque<List<DBObject>> dataStack = new LinkedList<List<DBObject>>();
+	private final Deque<List<DBObject>> dataStack = new LinkedList<>();
 
 	/**
-	 * @param uri
-	 *            monogdb://user:pass@host:port/database.collection?options...
-	 * @see MongoURI
+	 * Create an instance of {@code MongoDBWriter}.
+	 *
+	 * @param uri {@code monogdb://user:pass@host:port/database.collection?options...}
+	 * @throws UnknownHostException if the IP address of the MongoDB server could
+	 * not be determined.
 	 */
 	public MongoDBWriter(final String uri) throws UnknownHostException {
 		mongoDBConnection = new SimpleMongoDBConnection(uri);
@@ -112,35 +108,40 @@ public class MongoDBWriter implements StreamReceiver {
 		this.mongoDBConnection = mongoDBConnection;
 	}
 
+	@Override
 	public final void startRecord(final String identifier) {
 		dataStack.clear();
 		recordDBObject = new BasicDBObject();
 		if (identifier != null) {
 			recordDBObject.put(MongoDBKeys.RECORD_ID_KEY, identifier);
 		}
-		final List<DBObject> dbObjectList = new ArrayList<DBObject>();
+		final List<DBObject> dbObjectList = new ArrayList<>();
 		recordDBObject.put(MongoDBKeys.DATA_KEY, dbObjectList);
 		dataStack.push(dbObjectList);
 	}
 
+	@Override
 	public final void startEntity(final String identifier) {
 		final DBObject entityDBObject = new BasicDBObject();
-		final List<DBObject> dbObjectList = new ArrayList<DBObject>();
+		final List<DBObject> dbObjectList = new ArrayList<>();
 		entityDBObject.put(MongoDBKeys.KEY_PREFIX + identifier, dbObjectList);
 		dataStack.peek().add(entityDBObject);
 		dataStack.push(dbObjectList);
 	}
 
+	@Override
 	public final void literal(final String identifier, final String value) {
 		final DBObject literalDBObject = new BasicDBObject();
 		literalDBObject.put(MongoDBKeys.KEY_PREFIX + identifier, value);
 		dataStack.peek().add(literalDBObject);
 	}
 
+	@Override
 	public final void endEntity() {
 		dataStack.pop();
 	}
 
+	@Override
 	public final void endRecord() {
 		try {
 			mongoDBConnection.save(recordDBObject);
@@ -151,10 +152,12 @@ public class MongoDBWriter implements StreamReceiver {
 		}
 	}
 
+	@Override
 	public final void resetStream() {
 		dataStack.clear();
 	}
 
+	@Override
 	public final void closeStream() {
 		dataStack.clear();
 		mongoDBConnection.close();
