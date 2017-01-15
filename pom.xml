@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- 
+	<!--
 		Copyright 2013 Deutsche Nationalbibliothek
 
 		Licensed under the Apache License, Version 2.0 the "License";
@@ -47,7 +47,7 @@
 			<timezone>+1</timezone>
 		</developer>
 	</developers>
- 
+
 	<scm>
 		<connection>scm:git:git://github.com/culturegraph/metafacture-mongodb.git</connection>
 		<developerConnection>scm:git:git@github.com:culturegraph/metafacture-mongodb.git</developerConnection>
@@ -59,7 +59,7 @@
 		<system>GitHub Issues</system>
 		<url>https://github.com/culturegraph/metafacture-mongodb/issues</url>
 	</issueManagement>
-	
+
  	<distributionManagement>
 		<repository>
 			<id>sonatype-nexus-staging</id>
@@ -72,18 +72,18 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
  	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<targetJdk>1.6</targetJdk>
 	</properties>
-  
+
  	<build>
 		<plugins>
 			<plugin>
@@ -96,7 +96,7 @@
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -120,7 +120,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -132,7 +132,7 @@
 			</plugin>
 		</plugins>
 	</build>
- 
+
   	<dependencies>
 		<dependency>
 			<groupId>org.culturegraph</groupId>
@@ -140,14 +140,14 @@
 			<version>2.0.0</version>
 			<scope>provided</scope>
 		</dependency>
- 
+
  		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
- 
+
  		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -155,7 +155,7 @@
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
-					<!--  Conflicts with the newer hamcrest version 
+					<!--  Conflicts with the newer hamcrest version
 					      pulled by junit -->
 					<artifactId>hamcrest-core</artifactId>
 					<groupId>org.hamcrest</groupId>
@@ -168,7 +168,7 @@
  			<version>2.12.3</version>
  		</dependency>
   	</dependencies>
-  	
+
 	<profiles>
 		<profile>
 			<id>sonatype-oss-release</id>
@@ -192,7 +192,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
@@ -207,7 +207,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -218,94 +218,6 @@
 								<phase>verify</phase>
 								<goals>
 									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		
-		<profile>
-			<id>continuous_integration</id>
-			<activation>
-				<property>
-					<name>BUILD_NUMBER</name>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-checkstyle-plugin</artifactId>
-						<version>2.6</version>
-						<configuration>
-							<configLocation>${basedir}/quality_assurance/checkstyle_rules.xml</configLocation>
-							<propertyExpansion>basedir=${basedir}</propertyExpansion>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>checkstyle</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>cobertura-maven-plugin</artifactId>
-						<version>2.5.1</version>
-						<configuration>
-							<formats>
-								<format>xml</format>
-							</formats>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>cobertura</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>findbugs-maven-plugin</artifactId>
-						<version>2.3.2</version>
-						<configuration>
-							<threshold>High</threshold>
-							<failOnError>false</failOnError>
-							<findbugsXmlOutput>true</findbugsXmlOutput>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>check</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-pmd-plugin</artifactId>
-						<version>3.0</version>
-						<configuration>
-							<linkXRef>true</linkXRef>
-							<rulesets>
-								<ruleset>${basedir}/quality_assurance/pmd_rules.xml</ruleset>
-							</rulesets>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>pmd</goal>
 								</goals>
 							</execution>
 						</executions>
